@@ -1,9 +1,21 @@
+* {
+  font-family: Arial, sans-serif
+}
+
+body {
+  background:#FCFCFC
+}
+
 .currentImage {
   -webkit-filter: grayscale(0%);
   filter: grayscale(0%);
 }
 .card-body {
   padding: 0;
+}
+
+.btn-outline-info:hover {
+  color: white;
 }
 
 /* 技能名稱 */
@@ -18,7 +30,7 @@
   font-family: Arial, sans-serif;
   font-size: 14px;
   overflow: hidden;
-  /* padding: 10px 5px; */
+  padding: 2px 6px;
   word-break: normal;
 }
 .tg th {
@@ -29,7 +41,7 @@
   font-size: 14px;
   font-weight: normal;
   overflow: hidden;
-  /* padding: 10px 5px; */
+  padding: 2px 6px;
   word-break: normal;
 }
 .tg .tg-onj3 {
@@ -62,7 +74,7 @@
   font-family: Arial, sans-serif;
   font-size: 14px;
   overflow: hidden;
-  /* padding: 10px 5px; */
+  padding: 2px 6px;
   word-break: normal;
 }
 .tg th {
@@ -73,7 +85,7 @@
   font-size: 14px;
   font-weight: normal;
   overflow: hidden;
-  /* padding: 10px 5px; */
+  padding: 2px 6px;
   word-break: normal;
 }
 .tg .tg-c7yp {

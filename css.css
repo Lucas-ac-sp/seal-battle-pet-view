@@ -1,0 +1,9 @@
+/* Usage as a mixin */
+
+.visually-hidden-title {
+  @include visually-hidden;
+}
+
+.skip-navigation {
+  @include visually-hidden-focusable;
+}

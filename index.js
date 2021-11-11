@@ -51,37 +51,66 @@ function getHtml (spirit) {
     html += `
       <div class="">
         <img class="image"onmouseover="mouse (this, 'block')" onmouseout="mouse (this, 'none')" src=${item['圖片']} alt="技能圖片" data-index="${i}" data-name="${spirit}" data-level="${item['等級']}"></img>
-        <div class="jn_txt text-center"><span class="dq_dengji_b">0</span>/<span>${item['最大等級']}</span></div>
-
+        <div class="jn_txt text-center"><span class="dq_dengji_b">0</span>/<span>${item['limit']}</span></div>
 
         <div class="skill-z-index" style="display:none">
+         <h5 class="d-inline" style="color:#005AB5">${item['名稱']}</h5>
+         <h5 class="d-inline ml-1">${item['英文']}</h5>
+         <h6 class="mt-2"style="color:#AD5A5A">${item['說明']}</h6>
+          
           <table class="tg">
             <thead>
               <tr>
-                <th class="tg-abn1"><span style="font-weight:normal;color:#FFF;background-color:#46BDC6">名稱</span></th>
-                <th class="tg-abn1"><span style="font-weight:normal;color:#FFF;background-color:#46BDC6">等級</span></th>
-                <th class="tg-abn1"><span style="font-weight:normal;color:#FFF;background-color:#46BDC6">階段</span></th>
-                <th class="tg-abn1"><span style="font-weight:normal;color:#FFF;background-color:#46BDC6">類型</span></th>
-                <th class="tg-abn1"><span style="font-weight:normal;color:#FFF;background-color:#46BDC6">對象</span></th>
-                <th class="tg-abn1"><span style="font-weight:normal;color:#FFF;background-color:#46BDC6">屬性</span></th>
-                <th class="tg-abn1"><span style="font-weight:normal;color:#FFF;background-color:#46BDC6">說明</span></th>
-                <th class="tg-abn1"><span style="font-weight:normal;color:#FFF;background-color:#46BDC6">距離/範圍</span></th>
-                <th class="tg-abn1"><span style="font-weight:normal;color:#FFF;background-color:#46BDC6">持續</span></th>
-                <th class="tg-abn1"><span style="font-weight:normal;color:#FFF;background-color:#46BDC6">冷卻</span></th>
+    `
+            let keys = Object.keys(item)
+            console.log(keys)
+            keys = keys.filter(key => {
+              return key !== '名稱' && key !== '英文' && key !== '說明' && key !== '圖片' && key !== 'limit' && key !== 'levels'
+            })
+
+            keys.forEach(key => {
+              html += `
+                <th class="tg-abn1"><span style="font-weight:normal;color:#FFF;background-color:#46BDC6">${key}</span></th>
+              `
+            })
+                
+    html += `
               </tr>
             </thead>
             <tbody>
               <tr id="tableRow">
-                <td class="tg-4bam"><span style="font-weight:normal;background-color:#FFF">${item['名稱']}</span></td>
-                <td class="tg-4bam"><span style="font-weight:normal;background-color:#FFF">${item['等級']}</span></td>
-                <td class="tg-4bam"><span style="font-weight:normal;background-color:#FFF">${item['階段']}</span></td>
-                <td class="tg-4bam"><span style="font-weight:normal;background-color:#FFF">${item['類型']}</span></td>
-                <td class="tg-4bam"><span style="font-weight:normal;background-color:#FFF">${item['對象']}</span></td>
-                <td class="tg-onj3"><span style="font-weight:normal;color:#999;background-color:#FFF">${item['屬性']}</span></td>
-                <td class="tg-4bam"><span style="font-weight:normal;background-color:#FFF">${item['說明']}</span></td>
-                <td class="tg-4bam"><span style="font-weight:normal;background-color:#FFF">${item['距離/範圍']}</span></td>
-                <td class="tg-4bam"><span style="font-weight:normal;background-color:#FFF">${item['持續']}</span></td>
-                <td class="tg-4bam"><span style="font-weight:normal;background-color:#FFF">${item['冷卻']}</span></td>
+    ` 
+            keys.forEach(key => {
+              if (key === '屬性') {
+                const value = item['屬性']
+                let color = ''
+
+                switch (value) {
+                  case '火':
+                    color = 'color:#FF0000'
+                    break
+                  case '光':
+                    color = 'color:#FFA042'
+                    break
+                  case '水':
+                    color = 'color:#005AB5'
+                    break
+                  case '闇':
+                    color = 'color:#272727'
+                    break
+                }
+
+                html += `
+                  <td class="tg-4bam"><span style="font-weight:normal;background-color:#FFF;${color}">${item[key]}</span></td>
+                `
+              } else {
+                html += `
+                  <td class="tg-4bam"><span style="font-weight:normal;background-color:#FFF">${item[key]}</span></td>
+                `
+              }
+            })
+                
+    html += `      
               </tr>
             </tbody>
           </table>
@@ -89,33 +118,39 @@ function getHtml (spirit) {
             <table class="tg">
               <thead>
                 <tr>
-                  <th class="tg-c7yp"><span style="font-weight:normal;background-color:#FFF9CE">等級</span></th>
-                  <th class="tg-c7yp"><span style="font-weight:normal;background-color:#FFF9CE">點數</span></th>
-                  <th class="tg-c7yp"><span style="font-weight:normal;background-color:#FFF9CE">AP</span></th>
-                  <th class="tg-c7yp"><span style="font-weight:normal;background-color:#FFF9CE">傷害/增益</span></th>
-                  
-                  <th class="tg-c7yp"><span style="font-weight:normal;background-color:#FFF9CE">持續時間</span></th>
-                  <th class="tg-c7yp"><span style="font-weight:normal;background-color:#FFF9CE">冷卻時間(集中滿)</span></th>
-                  <th class="tg-c7yp"><span style="font-weight:normal;background-color:#FFF9CE">傷害值/效果值</span></th>
+    `
+              const levelKeys = Object.keys(item.levels[0])
+              levelKeys.forEach(key => {
+                html += `
+                  <th class="tg-c7yp"><span style="font-weight:normal;background-color:#FFF9CE">${key}</span></th>
+                `
+              })
+ 
+    html += `
                 </tr>
               </thead>
               <tbody>
     `
-    item.levels.forEach(level => {
-      const ap = level['AP消耗'] ? level['AP消耗'] / 2 : ''
+            item.levels.forEach(level => {
+              html += `
+                <tr>
+              `
+          levelKeys.forEach(key => {
+              if (key === 'AP') {
+                html += `
+                  <td class="tg-f4yw"><span style="font-weight:normal;background-color:#FFF">${level[key] / 2}</span></td>
+                `
+              } else  {
+                html += `
+                  <td class="tg-f4yw"><span style="font-weight:normal;background-color:#FFF">${level[key]}</span></td>
+                `
+              }
+            })
 
-      html += `
-        <tr>
-          <td class="tg-f4yw"><span style="font-weight:normal;background-color:#FFF">${level['技能等級']}</span></td>
-          <td class="tg-f4yw"><span style="font-weight:normal;background-color:#FFF">${level['技能點數']}</span></td>
-          <td class="tg-f4yw"><span style="font-weight:normal;background-color:#FFF">${ap}</span></td>
-          <td class="tg-f4yw"><span style="font-weight:normal;background-color:#FFF">${level['距離範圍']}</span></td>
-          <td class="tg-f4yw"><span>${level['持續時間']}</span></td>
-          <td class="tg-f4yw"><span style="font-weight:normal;background-color:#FFF">${level['冷卻時間(集中滿)']}</span></td>
-          <td class="tg-f4yw"><span style="font-weight:normal;background-color:#FFF">${level['傷害值/效果值']}</span></td>
-        </tr>
-      `
-    })
+              html += `
+                <tr>
+              `
+          })
 
     html += `
               </tbody>
@@ -205,7 +240,7 @@ KillImage.addEventListener('click', (event) => {
     let remainingCount = Number(remainingCountBox.textContent)
     const spiritName = target.dataset.name
     const skillIndex = Number(target.dataset.index)
-    const needCount =  Number(data[spiritName][skillIndex].levels[currentLevel]['技能點數'])
+    const needCount =  Number(data[spiritName][skillIndex].levels[currentLevel]['點數'])
 
     if (remainingCount < needCount) return alert(`剩餘點數需要 >= ${needCount}`)
 
@@ -232,7 +267,7 @@ KillImage.addEventListener('contextmenu', (event) => {
     let remainingCount = Number(remainingCountBox.textContent)
     const spiritName = target.dataset.name
     const skillIndex = Number(target.dataset.index)
-    const needCount =  Number(data[spiritName][skillIndex].levels[currentLevel - 1]['技能點數'])
+    const needCount =  Number(data[spiritName][skillIndex].levels[currentLevel - 1]['點數'])
 
     console.log(currentLevel)
     getCount (needCount, 'subtract', remainingCount)
