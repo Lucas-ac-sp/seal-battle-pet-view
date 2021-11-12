@@ -1,35 +1,36 @@
 const BASE_URL = "http://localhost:3000";
 const Index_URL = BASE_URL + "/api/fires";
 let data = {}
-getData()
 let level = ''
 let spirit = ''
-// let phase = '' 
-// let conditions = ''
 let html = ''
 let countHtml = ''
-// const a = '幼生期'
-// const b = '成長期'
-// const c = '茁壯期'
-// const d = '終極型態'
+const zero = document.querySelector('#zero')
+const one = document.querySelector('#one')
+const two = document.querySelector('#two')
+const three = document.querySelector('#three')
+const four = document.querySelector('#four')
+const renderSkill = document.querySelector('#renderSkill')
+const spiritColor = document.querySelector('.spiritColor')
 
 const form = document.querySelector('#form')
-const KillImage = document.querySelector('.Kill-image')
+const KillImage = document.querySelector('#KillImage')
 const levelInput = document.querySelector('#level-input')
 const countNode = document.querySelector('.countNode')
 let countBox = ''
 let remainingCountBox = ''
-// let tableRow = ''
 
-
-
+getData()
 async function getData() {
   try {
     
     const get = await axios.get(Index_URL)
-    data = (get.data)
-    console.log('成功獲得資料')
-    
+    data = get.data
+    const loading = document.querySelector('.loading')
+    loading.classList.remove('text-center');
+    loading.style.marginTop = ''
+    loading.firstElementChild.classList.remove('spinner-border', 'text-secondary')
+    loading.firstElementChild.firstElementChild.classList.remove('visually-hidden')
   } catch (error) {
     console.log('getData', error)
   }
@@ -45,25 +46,25 @@ function getCheckedValue (inputName) {
   return selectedOption
 }
 
-function getHtml (spirit) {
-  data[spirit].forEach((item, i) => {
+function getHtml (spirit, index) {
+  index.forEach(i => {
+    const item = data[spirit][i]
 
     html += `
-      <div class="">
-        <img class="image"onmouseover="mouse (this, 'block')" onmouseout="mouse (this, 'none')" src=${item['圖片']} alt="技能圖片" data-index="${i}" data-name="${spirit}" data-level="${item['等級']}"></img>
-        <div class="jn_txt text-center"><span class="dq_dengji_b">0</span>/<span>${item['limit']}</span></div>
+      <div class="me-3">
+        <img class="img-fluid" onmouseover="mouse (this, 'block')" onmouseout="mouse (this, 'none')" src=${item['圖片']} alt="技能圖片" data-index="${i}" data-name="${spirit}" data-level="${item['等級']}"></img>
+        <div class="jn_txt text-center"><span>0</span>/<span>${item['limit']}</span></div>
 
-        <div class="skill-z-index" style="display:none">
+        <div class="skill-z-index text-center" style="display:none">
          <h5 class="d-inline" style="color:#005AB5">${item['名稱']}</h5>
          <h5 class="d-inline ml-1">${item['英文']}</h5>
-         <h6 class="mt-2"style="color:#AD5A5A">${item['說明']}</h6>
+         <h6 class="mt-2"style="color:#984B4B">${item['說明']}</h6>
           
-          <table class="tg">
+          <table class="tg mt-1">
             <thead>
               <tr>
     `
             let keys = Object.keys(item)
-            console.log(keys)
             keys = keys.filter(key => {
               return key !== '名稱' && key !== '英文' && key !== '說明' && key !== '圖片' && key !== 'limit' && key !== 'levels'
             })
@@ -90,7 +91,7 @@ function getHtml (spirit) {
                     color = 'color:#FF0000'
                     break
                   case '光':
-                    color = 'color:#FFA042'
+                    color = 'color:#FF8000'
                     break
                   case '水':
                     color = 'color:#005AB5'
@@ -113,9 +114,9 @@ function getHtml (spirit) {
     html += `      
               </tr>
             </tbody>
-          </table>
-          <p>
-            <table class="tg">
+          </table 
+          <div>
+            <table class="tg mt-3">
               <thead>
                 <tr>
     `
@@ -155,7 +156,7 @@ function getHtml (spirit) {
     html += `
               </tbody>
             </table>
-          </p>
+          </div>
         </div>
       </div>
     `
@@ -163,11 +164,11 @@ function getHtml (spirit) {
 }
 
 function getCount (needCount, action, remainingCount) {
-  remainingCount = action === 'add' ? remainingCount - needCount : remainingCount + needCount
+  remainingCount = action === 'plus' ? remainingCount - needCount : remainingCount + needCount
   remainingCountBox.textContent = remainingCount
   
   let usedCount = Number(countBox.textContent)
-  usedCount = action === 'add' ? usedCount + needCount : usedCount - needCount
+  usedCount = action === 'plus' ? usedCount + needCount : usedCount - needCount
   countBox.textContent = usedCount
 }
 
@@ -175,51 +176,61 @@ function mouse (node, action) {
   node.nextElementSibling.nextElementSibling.style.display = action
 }
 
-
-
 form.addEventListener('submit', async (event) => {
   // 防止網頁自動跳轉
   event.preventDefault()
-  level = Number(levelInput.value)
   spirit = getCheckedValue('spirit')
-  // phase = getCheckedValue('phase')
-  // conditions = spirit + phase
+  if (!spirit) return alert('請選擇一個戰鬥寵物')
+ 
+  level = Number(levelInput.value)
+  
   html = ''
+  getHtml('基本技能', [0, 1, 2, 3, 4 , 5, 6])
+  zero.innerHTML = html
 
-  getHtml('基本技能')
+  html = ''
+  getHtml(spirit, [0, 1, 2])
+  one.innerHTML = html
 
-  // data['基本技能'].forEach(item => {
-  //   html += `
-  //     <div class="">
-  //       <img src=${item['圖片']} alt=""></img>
-  //       <div class="jn_txt text-center"><span class="dq_dengji_b">0</span>/<span>${item['最大等級']}</span></div>
-  //     </div>
-  //   `
-  // })
+  html = ''
+  getHtml(spirit, [3, 4])
+  two.innerHTML = html
 
-  getHtml(spirit)
+  html = ''
+  getHtml(spirit, [5, 6])
+  three.innerHTML = html
 
-  KillImage.innerHTML = html
+  html = ''
+  getHtml(spirit, [7])
+  four.innerHTML = html
+
   countHtml = ''
   countHtml += `
-    <span>已用點數 :</span><span id="count">0</span><span>剩餘點數 :</span><span id="remainingCount">${(level - 1 ) * 3}</span>
+    <span>使用 : </span><span class="me-2" id="count" style="color: #007979">0</span><span>剩餘 : </span><span id="remainingCount" style="color: #EA0000">${(level - 1 ) * 3}</span>
   `
   countNode.innerHTML = countHtml
+
   countBox = document.querySelector('#count')
   remainingCountBox = document.querySelector('#remainingCount')
 
-  // tableRow = document.querySelectorAll('#tableRow')
-  
-  // tableRow.forEach((row, index) => {
-  //   const tableData = row.querySelectorAll('td')
-  //   // 優化-只挖出需要的值
-  //   const values =  Object.values(data[spirit][index])
-    
-  //   tableData.forEach((data, i) => {
-  //     data.textContent = values[i]
-  //   })
-  // })
-
+  let color = ''
+  switch (spirit) {
+    case '火之精靈':
+      color = '#FF0000'
+      break
+    case '光之精靈':
+      color = '#FF8000'
+      break
+    case '黑暗精靈':
+      color = '#272727'
+      break
+    case '水之精靈':
+      color = '#005AB5'
+      break
+  }
+  spiritColor.textContent = spirit
+  spiritColor.style.color = color
+  renderSkill.style.display = ''
 })
 
 KillImage.addEventListener('click', (event) => {
@@ -233,22 +244,20 @@ KillImage.addEventListener('click', (event) => {
   
   if (currentLevel < maxLevel) {
     const needLevel = Number(target.dataset.level)
-    console.log(level)
-    console.log(needLevel)
-    if (level < needLevel) return alert(`等級需要 >= ${needLevel}`)
+
+    if (level < needLevel) return alert(`戰寵等級需要 >= ${needLevel}`)
 
     let remainingCount = Number(remainingCountBox.textContent)
     const spiritName = target.dataset.name
     const skillIndex = Number(target.dataset.index)
     const needCount =  Number(data[spiritName][skillIndex].levels[currentLevel]['點數'])
 
-    if (remainingCount < needCount) return alert(`剩餘點數需要 >= ${needCount}`)
+    if (remainingCount < needCount) return alert(`必要點數 : ${needCount}  剩餘點數 : ${remainingCount}`)
 
     currentLevel += 1
     levelBox.textContent = currentLevel
-    console.log(currentLevel)
-  
-    getCount (needCount, 'add', remainingCount)
+
+    getCount (needCount, 'plus', remainingCount)
   }
 })
 
@@ -269,15 +278,9 @@ KillImage.addEventListener('contextmenu', (event) => {
     const skillIndex = Number(target.dataset.index)
     const needCount =  Number(data[spiritName][skillIndex].levels[currentLevel - 1]['點數'])
 
-    console.log(currentLevel)
-    getCount (needCount, 'subtract', remainingCount)
+    getCount (needCount, 'minus', remainingCount)
 
     currentLevel -= 1
     levelBox.textContent = currentLevel
-    
-    
-    
   }
 })
-
-

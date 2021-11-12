@@ -1,24 +1,12 @@
-* {
+body {
+  background:#FCFCFC;
   font-family: Arial, sans-serif
 }
 
-body {
-  background:#FCFCFC
+.phase {
+  color: 	#003060;
 }
 
-.currentImage {
-  -webkit-filter: grayscale(0%);
-  filter: grayscale(0%);
-}
-.card-body {
-  padding: 0;
-}
-
-.btn-outline-info:hover {
-  color: white;
-}
-
-/* 技能名稱 */
 .tg {
   border-collapse: collapse;
   border-spacing: 0;
@@ -33,6 +21,7 @@ body {
   padding: 2px 6px;
   word-break: normal;
 }
+
 .tg th {
   border-color: black;
   border-style: solid;
@@ -44,6 +33,7 @@ body {
   padding: 2px 6px;
   word-break: normal;
 }
+
 .tg .tg-onj3 {
   background-color: #fff;
   color: #999;
@@ -62,32 +52,6 @@ body {
   vertical-align: bottom;
 }
 
-/* 技能等級 */
-.tg {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-.tg td {
-  border-color: black;
-  border-style: solid;
-  border-width: 1px;
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-  overflow: hidden;
-  padding: 2px 6px;
-  word-break: normal;
-}
-.tg th {
-  border-color: black;
-  border-style: solid;
-  border-width: 1px;
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-  font-weight: normal;
-  overflow: hidden;
-  padding: 2px 6px;
-  word-break: normal;
-}
 .tg .tg-c7yp {
   background-color: #fff9ce;
   text-align: center;
@@ -100,14 +64,10 @@ body {
 }
 
 .skill-z-index {
-  position: absolute;
-  /* width: 300px; */
-  /* background-color: azure; */
-  /* border-radius:10px; */
+  position: absolute; left:16%;
+  padding: 15px;
+  border: 1px solid	#D0D0D0;
+  background-color: #fffbfb;
+  border-radius:10px;
   z-index: 100
-}
-
-.image {
-  width: 35px;
-  height: 35px;
 }
