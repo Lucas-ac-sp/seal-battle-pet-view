@@ -3,6 +3,10 @@ body {
   font-family: Arial, sans-serif
 }
 
+.btn-outline-info:hover {
+  color: white;
+}
+
 .phase {
   color: 	#003060;
 }
