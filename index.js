@@ -1,5 +1,5 @@
-const BASE_URL = "http://localhost:3000";
-const Index_URL = BASE_URL + "/api/fires";
+const BASE_URL = "https://seal-battle-pet.herokuapp.com"
+const Index_URL = BASE_URL + "/api/battlePet"
 let data = {}
 let level = ''
 let spirit = ''
